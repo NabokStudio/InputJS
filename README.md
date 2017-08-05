@@ -1,2 +1,2 @@
 # What's new?
-* Now you can control mouse using `GetMousePosition`, `GetMouseButton`, `GetMouseUp`, `GetMouseButtonUp`, `GetMouseButtonDown`.
+* Added keyboard axis system. Added 3 default axis - "Horizontal", "Vertical" and "Arrows". You can use `GetAxis`, `CreateNewAxis` and `RemoveAxis`.

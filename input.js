@@ -97,6 +97,33 @@ var Input = {
     GetKeyCode: function(code) {
         if (typeof code == "number") return code;
         return Input.keyboard.list[code];
+    },
+
+    mouse: {
+        x: undefined,
+        y: undefined,
+        down: undefined,
+        up: undefined,
+        isDown: undefined,
+        isUp: undefined
+    },
+    GetMousePosition: function() {
+        return {
+            x: Input.mouse.x,
+            y: Input.mouse.y
+        }
+    },
+    GetMouseButton: function() {
+        return Input.mouse.isDown;
+    },
+    GetMouseUp: function() {
+        return Input.mouse.isUp;
+    },
+    GetMouseButtonDown: function() {
+        return Input.mouse.down;
+    },
+    GetMouseButtonUp: function() {
+        return Input.mouse.up;
     }
 }
 
@@ -117,4 +144,27 @@ document.body.addEventListener("keyup", function(e) {
         Input.keyboard.up[e.keyCode] = false;
     }, 25);
 })
+document.body.addEventListener("mousemove", function(e) {
+    Input.mouse.x = e.clientX;
+    Input.mouse.y = e.clientY;
+})
+document.body.addEventListener("mousedown", function(e) {
+    Input.mouse.isDown = true;
+    Input.mouse.isUp = false;
 
+    Input.mouse.down = true;
+
+    setTimeout(function() {
+        Input.mouse.down = false;
+    }, 25)
+})
+document.body.addEventListener("mouseup", function(e) {
+    Input.mouse.isDown = false;
+    Input.mouse.isUp = true;
+
+    Input.mouse.up = true;
+
+    setTimeout(function() {
+        Input.mouse.up = false;
+    }, 25)
+})

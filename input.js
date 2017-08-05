@@ -209,6 +209,3 @@ document.body.addEventListener("mouseup", function(e) {
     }, 25)
 })
 
-setInterval(function() {
-    console.log(Input.GetAxis("Horizontal"));
-}, 1000/60);

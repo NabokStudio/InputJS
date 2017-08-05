@@ -1,2 +1,2 @@
 # What's new?
-* Now you can control keyboard, using `GetButton`, `GetButtonDown`, `GetButtonUp`, `GetKeyCode`
+* Now you can control mouse using `GetMousePosition`, `GetMouseButton`, `GetMouseUp`, `GetMouseButtonUp`, `GetMouseButtonDown`.

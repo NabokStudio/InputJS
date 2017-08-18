@@ -1,11 +1,3 @@
-/*
-    TODO:
-        !!! fast !!!
-            - Replace 'UnIgnoreKeys' on `StopIgnoreKeys` +++
-            - Add `GetMouseCtxDown` and `GetMouseCtxUp`  ???
-        ... can wait
-*/
-
 var Input = {
     keyboard: {
         up: [],
@@ -174,7 +166,7 @@ var Input = {
     },
     GetCtxUp: function() {
         return Input.mouse.isctxup;
-    }
+    },
     GetCtxMenuDown: function() {
         return Input.mouse.getctxdown;
     },

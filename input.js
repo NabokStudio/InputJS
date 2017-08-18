@@ -83,8 +83,35 @@ var Input = {
             "NUMPAD_SUBSTRACT": 109,
             "NUMPAD_ADD": 107,
             "NUMPAD_ENTER": 13
+        },
+        ignored: []
+    },
+    mouse: {
+        x: undefined,
+        y: undefined,
+        down: undefined,
+        up: undefined,
+        isDown: undefined,
+        isUp: undefined
+    },
+    axis: {
+        Vertical: {
+            value: 0,
+            positive: "S",
+            negative: "W"
+        },
+        Horizontal: {
+            value: 0,
+            positive: "D",
+            negative: "A"
+        },
+        Arrows: {
+            value: 0,
+            positive: "RIGHT",
+            negative: "LEFT"
         }
     },
+    
     GetButton: function(button) {
         return Input.keyboard.now[Input.GetKeyCode(button)];
     },
@@ -98,15 +125,18 @@ var Input = {
         if (typeof code == "number") return code;
         return Input.keyboard.list[code];
     },
-
-    mouse: {
-        x: undefined,
-        y: undefined,
-        down: undefined,
-        up: undefined,
-        isDown: undefined,
-        isUp: undefined
+    IgnoreKeys: function() {
+        for (var i in arguments) {
+            Input.keyboard.ignored.push(Input.GetKeyCode(arguments[i]));
+        }
     },
+    UnIgnoreKeys: function() {
+        for (var i in arguments) 
+            for (var j in Input.keyboard.ignored) {
+                if (Input.GetKeyCode(Input.keyboard.ignored[j]) == Input.GetKeyCode(arguments[i])) Input.keyboard.ignored.splice(j, 1);
+            }
+    },
+
     GetMousePosition: function() {
         return {
             x: Input.mouse.x,
@@ -126,23 +156,6 @@ var Input = {
         return Input.mouse.up;
     },
 
-    axis: {
-        Vertical: {
-            value: 0,
-            positive: "S",
-            negative: "W"
-        },
-        Horizontal: {
-            value: 0,
-            positive: "D",
-            negative: "A"
-        },
-        Arrows: {
-            value: 0,
-            positive: "RIGHT",
-            negative: "LEFT"
-        }
-    },
     GetAxis: function(name) {
         if (Input.axis[name].value) return Input.axis[name].value;
     },
@@ -159,6 +172,11 @@ var Input = {
 }
 
 document.body.addEventListener("keydown", function(e) {
+
+    for (var j in Input.keyboard.ignored) {
+        if (Input.keyboard.ignored[j] == e.keyCode) return;
+    }
+
     Input.keyboard.now[e.keyCode] = true;
     Input.keyboard.down[e.keyCode] = true;
 
@@ -172,6 +190,11 @@ document.body.addEventListener("keydown", function(e) {
     }
 })
 document.body.addEventListener("keyup", function(e) {
+
+    for (var j in Input.keyboard.ignored) {
+        if (Input.keyboard.ignored[j] == e.keyCode) return;
+    }
+
     Input.keyboard.now[e.keyCode] = false;
     Input.keyboard.down[e.keyCode] = false;
     Input.keyboard.up[e.keyCode] = true;
@@ -208,4 +231,3 @@ document.body.addEventListener("mouseup", function(e) {
         Input.mouse.up = false;
     }, 25)
 })
-

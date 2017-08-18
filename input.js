@@ -1,3 +1,11 @@
+/*
+    TODO:
+        !!! fast !!!
+            - Replace 'UnIgnoreKeys' on `StopIgnoreKeys` +++
+            - Add `GetMouseCtxDown` and `GetMouseCtxUp`  ???
+        ... can wait
+*/
+
 var Input = {
     keyboard: {
         up: [],
@@ -92,7 +100,13 @@ var Input = {
         down: undefined,
         up: undefined,
         isDown: undefined,
-        isUp: undefined
+        isUp: undefined,
+
+        isctxdown: undefined,
+        isctxup: undefined,
+
+        getctxdown: undefined,
+        getctxup: undefined
     },
     axis: {
         Vertical: {
@@ -111,7 +125,7 @@ var Input = {
             negative: "LEFT"
         }
     },
-    
+
     GetButton: function(button) {
         return Input.keyboard.now[Input.GetKeyCode(button)];
     },
@@ -130,7 +144,7 @@ var Input = {
             Input.keyboard.ignored.push(Input.GetKeyCode(arguments[i]));
         }
     },
-    UnIgnoreKeys: function() {
+    StopIgnoreKeys: function() {
         for (var i in arguments) 
             for (var j in Input.keyboard.ignored) {
                 if (Input.GetKeyCode(Input.keyboard.ignored[j]) == Input.GetKeyCode(arguments[i])) Input.keyboard.ignored.splice(j, 1);
@@ -154,6 +168,18 @@ var Input = {
     },
     GetMouseButtonUp: function() {
         return Input.mouse.up;
+    },
+    GetCtxMenu: function() {
+        return Input.mouse.isctxdown;
+    },
+    GetCtxUp: function() {
+        return Input.mouse.isctxup;
+    }
+    GetCtxMenuDown: function() {
+        return Input.mouse.getctxdown;
+    },
+    GetCtxMenuUp: function() {
+        return Input.mouse.getctxup;
     },
 
     GetAxis: function(name) {
@@ -212,6 +238,18 @@ document.body.addEventListener("mousemove", function(e) {
     Input.mouse.y = e.clientY;
 })
 document.body.addEventListener("mousedown", function(e) {
+
+    if (e.which == 3) {
+        Input.mouse.isctxup = false;
+        Input.mouse.isctxdown = true;
+
+        Input.mouse.getctxdown = true;
+
+        setTimeout(function() {
+            Input.mouse.getctxdown = false;
+        }, 25)
+    }
+
     Input.mouse.isDown = true;
     Input.mouse.isUp = false;
 
@@ -222,6 +260,18 @@ document.body.addEventListener("mousedown", function(e) {
     }, 25)
 })
 document.body.addEventListener("mouseup", function(e) {
+
+    if (e.which == 3) {
+        Input.mouse.isctxdown = false;
+        Input.mouse.isctxup = true;
+
+        Input.mouse.getctxup = true;
+
+        setTimeout(function() {
+            Input.mouse.getctxup = false;
+        }, 25)
+    }
+
     Input.mouse.isDown = false;
     Input.mouse.isUp = true;
 

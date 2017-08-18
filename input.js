@@ -89,6 +89,7 @@ var Input = {
     mouse: {
         x: undefined,
         y: undefined,
+
         down: undefined,
         up: undefined,
         isDown: undefined,
@@ -96,9 +97,10 @@ var Input = {
 
         isctxdown: undefined,
         isctxup: undefined,
-
         getctxdown: undefined,
-        getctxup: undefined
+        getctxup: undefined,
+
+        ignore: undefined
     },
     axis: {
         Vertical: {
@@ -173,6 +175,28 @@ var Input = {
     GetCtxMenuUp: function() {
         return Input.mouse.getctxup;
     },
+    SetCursorStyle: function(style) {
+        if (style.indexOf(".") !== -1 ||
+            style.indexOf("/") !== -1) {
+            document.body.style.cursor = "url(" + style + ")";
+        } else {
+            document.body.style.cursor = style;
+        }
+    },
+    IgnoreMouse: function() {
+        mouse.ignore = true;       
+    },
+    StopIgnoreMouse: function() {
+        mouse.ignore = false;
+    },
+    HideCursor: function() {
+        Input.SetCursorStyle("none");
+    },
+    UnHideCursor: function(style) {
+        if (!style) style = "default";
+
+        Input.SetCursorStyle(style);
+    },
 
     GetAxis: function(name) {
         if (Input.axis[name].value) return Input.axis[name].value;
@@ -226,10 +250,15 @@ document.body.addEventListener("keyup", function(e) {
     }
 })
 document.body.addEventListener("mousemove", function(e) {
+
+    if (mouse.ignore) return;
+
     Input.mouse.x = e.clientX;
     Input.mouse.y = e.clientY;
 })
 document.body.addEventListener("mousedown", function(e) {
+
+    if (mouse.ignore) return;
 
     if (e.which == 3) {
         Input.mouse.isctxup = false;
@@ -252,6 +281,8 @@ document.body.addEventListener("mousedown", function(e) {
     }, 25)
 })
 document.body.addEventListener("mouseup", function(e) {
+
+    if (mouse.ignore) return;
 
     if (e.which == 3) {
         Input.mouse.isctxdown = false;

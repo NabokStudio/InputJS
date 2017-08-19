@@ -1,4 +1,4 @@
-var this = {
+var Input = {
     keyboard: {
         up: [],
         down: [],

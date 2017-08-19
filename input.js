@@ -1,4 +1,4 @@
-var Input = {
+var this = {
     keyboard: {
         up: [],
         down: [],
@@ -120,62 +120,62 @@ var Input = {
         }
     },
 
-    GetButton: function(button) {
-        return Input.keyboard.now[Input.GetKeyCode(button)];
+    getButton: function(button) {
+        return this.keyboard.now[this.GetKeyCode(button)];
     },
-    GetButtonDown: function(button) {
-        return Input.keyboard.down[Input.GetKeyCode(button)];
+    getButtonDown: function(button) {
+        return this.keyboard.down[this.GetKeyCode(button)];
     },
-    GetButtonUp: function(button) {
-        return Input.keyboard.up[Input.GetKeyCode(button)];
+    getButtonUp: function(button) {
+        return this.keyboard.up[this.GetKeyCode(button)];
     },
-    GetKeyCode: function(code) {
+    getKeyCode: function(code) {
         if (typeof code == "number") return code;
-        return Input.keyboard.list[code];
+        return this.keyboard.list[code];
     },
-    IgnoreKeys: function() {
+    ignoreKeys: function() {
         for (var i in arguments) {
-            Input.keyboard.ignored.push(Input.GetKeyCode(arguments[i]));
+            this.keyboard.ignored.push(this.GetKeyCode(arguments[i]));
         }
     },
-    StopIgnoreKeys: function() {
+    stopIgnoreKeys: function() {
         for (var i in arguments) 
-            for (var j in Input.keyboard.ignored) {
-                if (Input.GetKeyCode(Input.keyboard.ignored[j]) == Input.GetKeyCode(arguments[i])) Input.keyboard.ignored.splice(j, 1);
+            for (var j in this.keyboard.ignored) {
+                if (this.GetKeyCode(this.keyboard.ignored[j]) == this.GetKeyCode(arguments[i])) this.keyboard.ignored.splice(j, 1);
             }
     },
 
-    GetMousePosition: function() {
+    getMousePosition: function() {
         return {
-            x: Input.mouse.x,
-            y: Input.mouse.y
+            x: this.mouse.x,
+            y: this.mouse.y
         }
     },
-    GetMouseButton: function() {
-        return Input.mouse.isDown;
+    getMouseButton: function() {
+        return this.mouse.isDown;
     },
-    GetMouseUp: function() {
-        return Input.mouse.isUp;
+    getMouseUp: function() {
+        return this.mouse.isUp;
     },
-    GetMouseButtonDown: function() {
-        return Input.mouse.down;
+    getMouseButtonDown: function() {
+        return this.mouse.down;
     },
-    GetMouseButtonUp: function() {
-        return Input.mouse.up;
+    getMouseButtonUp: function() {
+        return this.mouse.up;
     },
-    GetCtxMenu: function() {
-        return Input.mouse.isctxdown;
+    getCtxMenu: function() {
+        return this.mouse.isctxdown;
     },
-    GetCtxUp: function() {
-        return Input.mouse.isctxup;
+    getCtxUp: function() {
+        return this.mouse.isctxup;
     },
-    GetCtxMenuDown: function() {
-        return Input.mouse.getctxdown;
+    getCtxMenuDown: function() {
+        return this.mouse.getctxdown;
     },
-    GetCtxMenuUp: function() {
-        return Input.mouse.getctxup;
+    getCtxMenuUp: function() {
+        return this.mouse.getctxup;
     },
-    SetCursorStyle: function(style) {
+    setCursorStyle: function(style) {
         if (style.indexOf(".") !== -1 ||
             style.indexOf("/") !== -1) {
             document.body.style.cursor = "url(" + style + ")";
@@ -183,33 +183,33 @@ var Input = {
             document.body.style.cursor = style;
         }
     },
-    IgnoreMouse: function() {
+    ignoreMouse: function() {
         mouse.ignore = true;       
     },
-    StopIgnoreMouse: function() {
+    stopIgnoreMouse: function() {
         mouse.ignore = false;
     },
-    HideCursor: function() {
-        Input.SetCursorStyle("none");
+    hideCursor: function() {
+        this.SetCursorStyle("none");
     },
-    UnHideCursor: function(style) {
+    unHideCursor: function(style) {
         if (!style) style = "default";
 
-        Input.SetCursorStyle(style);
+        this.SetCursorStyle(style);
     },
 
-    GetAxis: function(name) {
-        if (Input.axis[name].value) return Input.axis[name].value;
+    getAxis: function(name) {
+        if (this.axis[name].value) return this.axis[name].value;
     },
-    CreateNewAxis: function(name, positive, negative) {
-            Input.axis[name] = {
+    createNewAxis: function(name, positive, negative) {
+            this.axis[name] = {
                 value: 0,
                 positive: positive,
                 negative: negative
             }
     },
-    RemoveAxis: function(name) {
-        if (Input.axis[name]) delete Input.axis[name];
+    removeAxis: function(name) {
+        if (this.axis[name]) delete this.axis[name];
     }
 }
 
